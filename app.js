@@ -151,10 +151,3 @@ while (programa_prendido) {
     }
 }
 alert("Gracias por si visita!")
-alert("Chaaaauuuu")
-alert("Nos vemoooss!!")
-alert("Buenas Noches")
-alert("bue cuando te vas?")
-alert("Que haces acá aún?")
-alert("Queres que te ejecute un loop infinito??")
-alert("Entonces andate sfjdsgds ;3")
