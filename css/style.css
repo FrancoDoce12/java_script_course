@@ -1,0 +1,79 @@
+body {
+    color: white
+}
+
+.navbar-custom {
+    height: 60px;
+
+    background-color: rgba(0, 255, 255, 0.5);
+    border-width: 0px;
+    border-bottom: 5px ridge rgba(0, 0, 255, 0.44);
+
+    padding-bottom: 58px;
+}
+
+.link-1 {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.portrait {
+    height: 360px;
+
+
+    background: radial-gradient(rgba(0, 0, 0, 0.158) 40%, rgba(0, 0, 0, 0.267), rgba(0, 0, 0, 0.548)70%), url(/assets/istockphoto-1322506703-170667a.jpg);
+
+    /* background-image: url(/assets/istockphoto-1322506703-170667a.jpg); */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.text_shadow {
+    text-shadow: 3px 3px 5px  black;
+}
+
+.content_1 {
+    
+}
+
+
+.shadow_custom_green {
+    box-shadow: 0px 0px 30px 6px springgreen;
+    transition: all 1s;
+}
+
+.shadow_custom_green:hover {
+    transform: scale(1.08);
+    box-shadow: 0px 0px 40px 6px springgreen;
+    transition: all 1s;
+}
+
+
+.shadow_custom_yellow {
+    box-shadow: 0px 0px 30px 6px darkorange;
+    transition: all 1s;
+}
+
+.shadow_custom_yellow:hover {
+    transform: scale(1.08);
+    box-shadow: 0px 0px 40px 6px darkorange;
+    transition: all 1s;
+}
+
+
+.shadow_custom_red {
+    box-shadow: 0px 0px 30px 6px darkred;
+    transition: all 1s;
+}
+
+.shadow_custom_red:hover {
+    transform: scale(1.08);
+    box-shadow: 0px 0px 40px 6px darkred;
+    transition: all 1s;
+}
+
+
+.footer {
+    background-color: rgb(110, 144, 185);
+}
