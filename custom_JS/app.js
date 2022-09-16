@@ -95,6 +95,13 @@ function checks_if_are_avalible_programers(){
     return are_avalibles
 }
 
+// que bien que me vendria react ahora mismo
+function displayProgramersDOM(programers_array){
+    programers_array.forEach(programer => {
+
+    })
+}
+
 /*Aqui empieza las funciones usadas para generar programadores */
 
 function getRandomProgramer() {
