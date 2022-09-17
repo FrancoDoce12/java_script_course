@@ -80,27 +80,36 @@ function displayAllProgramers() {
     return display_programers
 }
 
-function displayListOfProgramers(list_of_programers){
+function displayListOfProgramers(list_of_programers) {
     let new_lines = "\n\n"
     list_of_programers.forEach(programer => console.log(new_lines + programer.aTexto()))
 }
 
-function checks_if_are_avalible_programers(){
+function checks_if_are_avalible_programers() {
     let are_avalibles = false
     programadores_a_contratar.forEach(element => {
-        if(element.tiempo_libre){
+        if (element.tiempo_libre) {
             are_avalibles = true
         }
     })
     return are_avalibles
 }
 
-// que bien que me vendria react ahora mismo
-function displayProgramersDOM(programers_array){
-    programers_array.forEach(programer => {
+/*
+Aqui empiezan las funciones y variables relacionadas con el DOM 
+*/
+//Variables :
+const content_container_1 = document.querySelector(".content_1")
 
+// que bien que me vendria react ahora mismo
+function displayProgramersDOM(programers_array) {
+
+    i = 0
+    programers_array.forEach(programer => {
+        content_container_1.appendChild(document.createElement("h6").innerHTML = `Holaaa mundoo ${i}`)
     })
 }
+
 
 /*Aqui empieza las funciones usadas para generar programadores */
 
@@ -123,7 +132,7 @@ function filterProgramerByName(name) {
         debugger
         console.log("No se encontraron resultados coincidentes")
         return false
-    } else if (result_get.length == 0 ) {
+    } else if (result_get.length == 0) {
         debugger
         console.log("No se encontraron resultados coincidentes")
         return false
@@ -199,8 +208,7 @@ while (programa_prendido) {
 
     displayAllProgramers()
 
-    if ( prompt("Buscar a un programador en especial?(S/N)") =="S" )
-    {
+    if (prompt("Buscar a un programador en especial?(S/N)") == "S") {
         busqueda_activada = true
         alert("Busqueda activada")
     } else {
@@ -208,8 +216,7 @@ while (programa_prendido) {
         alert("Busqueda desactivada")
     }
 
-    while(busqueda_activada)
-    {
+    while (busqueda_activada) {
         alert("Por que aspecto desea buscar a los programadores?")
         let eleccion = prompt("\n1. Nombre\n2. Titulo\n3. Si tiene tiempo libre o no\n4. Minimo de experiencia")
         if (eleccion == "1") {
@@ -217,7 +224,7 @@ while (programa_prendido) {
         } else if (eleccion == "2") {
             filterProgramerByTitle(prompt("Ingrese el titulo del programador que busqua"))
         } else if (eleccion == "3") {
-            if(prompt("Busca a Programadorews con tiempo libre? (S/N)") == "S") {
+            if (prompt("Busca a Programadorews con tiempo libre? (S/N)") == "S") {
                 filterProgramerByFreeTime(true)
             } else {
                 alert("Buscando programadores sin tiempo libre")
@@ -227,14 +234,14 @@ while (programa_prendido) {
             alert("Buscando programadores por minima experiencia")
             filterProgramerByWorkExpirence(prompt("Cual es la experiencia minima que busca?"))
         }
-        if (prompt("Continuar una nueva busqueda?(S/N)") != "S"){
+        if (prompt("Continuar una nueva busqueda?(S/N)") != "S") {
             busqueda_activada = false
         }
     }
 
 
 
-    if (!checks_if_are_avalible_programers()){
+    if (!checks_if_are_avalible_programers()) {
         alert("Lo sentimos, no hay programadores libres por el momento, han sido todos contratados\n¡Vuelva mas tarde!")
         break
     }
