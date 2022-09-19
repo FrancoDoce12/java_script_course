@@ -105,7 +105,10 @@ Aqui empiezan las funciones y variables relacionadas con el DOM
 // Funciones:
 function load_programer(programer) {
     const clases_to_use = 'text-center mt-1 text_size_1'
+
     let tiempo_libre 
+    let expeciencia_tiempo = `Tiene: ${programer.expeciencia_tiempo} años de experiencia`
+
     if (programer.tiempo_libre) {
         tiempo_libre = "¡Esta Disponible!"
     } else {
@@ -126,7 +129,7 @@ function load_programer(programer) {
 
     const h3_expirience = document.createElement('h3')
     h3_expirience.classList = clases_to_use
-    h3_expirience.textContent = programer.expirience
+    h3_expirience.textContent = expeciencia_tiempo
 
     const h3_disponible = document.createElement('h3')
     h3_disponible.classList = clases_to_use
