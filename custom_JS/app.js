@@ -104,11 +104,17 @@ Aqui empiezan las funciones y variables relacionadas con el DOM
 // que bien que me vendria react ahora mismo
 // Funciones:
 function load_programer(programer) {
-    const clases_to_use = 'text-center mt-1 w-25'
+    const clases_to_use = 'text-center mt-1 text_size_1'
+    let tiempo_libre 
+    if (programer.tiempo_libre) {
+        tiempo_libre = "¡Esta Disponible!"
+    } else {
+        tiempo_libre = "No esta disponible"
+    }
 
 
     const div = document.createElement('div')
-    div.classList = 'col mr-4 bg-info border border-2 border-success rounded-3 shadow_custom_black w-25'
+    div.classList = 'col mr-4 bg-info border border-2 border-success rounded-3 shadow_custom_black w-25 m-3'
 
     const h2_name = document.createElement("h2")
     h2_name.classList = clases_to_use
@@ -124,7 +130,7 @@ function load_programer(programer) {
 
     const h3_disponible = document.createElement('h3')
     h3_disponible.classList = clases_to_use
-    h3_disponible.textContent = programer.tiempo_libre
+    h3_disponible.textContent = tiempo_libre
 
     div.append(h2_name, h3_title, h3_expirience, h3_disponible)
 
@@ -132,7 +138,12 @@ function load_programer(programer) {
 
     container_content.append(div)
 
+}
 
+function display_all_programers_in_dom() {
+    programadores_a_contratar.forEach(programer => {
+        load_programer(programer)
+    })
 }
 
 
@@ -149,6 +160,7 @@ function getRandomProgramer() {
 }
 
 /* Aqui empieza las funciones de filtrado de usuarios */
+
 function filterProgramerByName(name) {
     alert("En la consola estan los resultados")
     let result_get = null
@@ -214,84 +226,15 @@ function filterProgramerByFreeTime(tiempo_libre) {
 /* Aqui empieza la ejecucion del programa */
 
 
-alert("En esta pagina vas a poder contratar programadores")
-alert(`Hay ${programadores_disponibles} programadores en esta pagina para contratar`)
+
 
 
 for (let i = 0; i < programadores_disponibles; i++) {
     programadores_a_contratar.push(getRandomProgramer())
 }
 
-
-alert("La Lista de programadores que esta pagina puede ofrecer esta en la CONSOLA")
-
-
-
-let programa_prendido = true
-let busqueda_activada
-
-while (programa_prendido) {
-
-    displayAllProgramers()
-
-    if (prompt("Buscar a un programador en especial?(S/N)") == "S") {
-        busqueda_activada = true
-        alert("Busqueda activada")
-    } else {
-        busqueda_activada = false
-        alert("Busqueda desactivada")
-    }
-
-    while (busqueda_activada) {
-        alert("Por que aspecto desea buscar a los programadores?")
-        let eleccion = prompt("\n1. Nombre\n2. Titulo\n3. Si tiene tiempo libre o no\n4. Minimo de experiencia")
-        if (eleccion == "1") {
-            filterProgramerByName(prompt("Ingrese el nombre del programador que busqua"))
-        } else if (eleccion == "2") {
-            filterProgramerByTitle(prompt("Ingrese el titulo del programador que busqua"))
-        } else if (eleccion == "3") {
-            if (prompt("Busca a Programadorews con tiempo libre? (S/N)") == "S") {
-                filterProgramerByFreeTime(true)
-            } else {
-                alert("Buscando programadores sin tiempo libre")
-                filterProgramerByFreeTime(false)
-            }
-        } else {
-            alert("Buscando programadores por minima experiencia")
-            filterProgramerByWorkExpirence(prompt("Cual es la experiencia minima que busca?"))
-        }
-        if (prompt("Continuar una nueva busqueda?(S/N)") != "S") {
-            busqueda_activada = false
-        }
-    }
+display_all_programers_in_dom()
 
 
 
-    if (!checks_if_are_avalible_programers()) {
-        alert("Lo sentimos, no hay programadores libres por el momento, han sido todos contratados\n¡Vuelva mas tarde!")
-        break
-    }
 
-    let programador_seleccionado = parseInt(prompt("Ingrese el numero del programador que dese contratar")) - 1
-
-    let programador_contratado = programadores_a_contratar[programador_seleccionado]
-    if (programador_seleccionado > programadores_a_contratar.length) {
-        alert("El programador seleccionado no existe")
-        continue
-    } else if (programador_contratado.tiempo_libre) {
-        let confirmacion = prompt("¿Este es el programador que desea contratar?(S/N)\n" + programadores_a_contratar[programador_seleccionado].aTexto())
-        console.log(confirmacion)
-        if (confirmacion.toUpperCase() === "S") {
-            programadores_a_contratar[programador_seleccionado].sacarDisponible()
-            alert(`¡El Programador ${programador_contratado.nombre} a sido contratado !!`)
-            continue
-        } else {
-            alert(`Okey, el programador ${programadores_a_contratar[programador_seleccionado].nombre} NO a sido contratado\ny la transaccion a sido cancelada`)
-            continue
-        }
-    }
-    else {
-        alert(`El Programador \"${programador_contratado.nombre}\" no tiene tiempo libre ahora mismo`)
-    }
-}
-alert("Gracias por si visita!")
