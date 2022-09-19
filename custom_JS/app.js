@@ -1,7 +1,7 @@
 
 /* aqui se declaram variables globales nesesarias para el funcionamiento del programa*/
-const max_programadores_disponibles = 25
-const min_programadores_disponibles = 10
+const max_programadores_disponibles = 3
+const min_programadores_disponibles = 3
 const programadores_disponibles = getRandomNumberBetween(min_programadores_disponibles, max_programadores_disponibles)
 
 
@@ -99,16 +99,42 @@ function checks_if_are_avalible_programers() {
 Aqui empiezan las funciones y variables relacionadas con el DOM 
 */
 //Variables :
-const content_container_1 = document.querySelector(".content_1")
+
 
 // que bien que me vendria react ahora mismo
-function displayProgramersDOM(programers_array) {
+// Funciones:
+function load_programer(programer) {
+    const clases_to_use = 'text-center mt-1 w-25'
 
-    i = 0
-    programers_array.forEach(programer => {
-        content_container_1.appendChild(document.createElement("h6").innerHTML = `Holaaa mundoo ${i}`)
-    })
+
+    const div = document.createElement('div')
+    div.classList = 'col mr-4 bg-info border border-2 border-success rounded-3 shadow_custom_black w-25'
+
+    const h2_name = document.createElement("h2")
+    h2_name.classList = clases_to_use
+    h2_name.textContent = programer.nombre
+
+    const h3_title = document.createElement('h3')
+    h3_title.classList = clases_to_use
+    h3_title.textContent = programer.titulo
+
+    const h3_expirience = document.createElement('h3')
+    h3_expirience.classList = clases_to_use
+    h3_expirience.textContent = programer.expirience
+
+    const h3_disponible = document.createElement('h3')
+    h3_disponible.classList = clases_to_use
+    h3_disponible.textContent = programer.tiempo_libre
+
+    div.append(h2_name, h3_title, h3_expirience, h3_disponible)
+
+    let container_content = document.querySelector(".content_1")
+
+    container_content.append(div)
+
+
 }
+
 
 
 /*Aqui empieza las funciones usadas para generar programadores */
