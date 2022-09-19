@@ -103,6 +103,11 @@ Aqui empiezan las funciones y variables relacionadas con el DOM
 
 // que bien que me vendria react ahora mismo
 // Funciones:
+function change_h2_of_dom(){
+    h2 = document.querySelector('#are_programers_avalible')
+    h2.textContent = "No hay programadores disponibles por el momento :c"
+}
+
 function load_programer(programer) {
     const clases_to_use = 'text-center mt-1 text_size_1'
 
@@ -238,6 +243,9 @@ for (let i = 0; i < programadores_disponibles; i++) {
 
 display_all_programers_in_dom()
 
+if(!checks_if_are_avalible_programers()){
+    change_h2_of_dom()
+}
 
 
 
