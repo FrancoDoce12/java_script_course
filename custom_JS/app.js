@@ -1,7 +1,7 @@
 
 /* aqui se declaram variables globales nesesarias para el funcionamiento del programa*/
-const max_programadores_disponibles = 3
-const min_programadores_disponibles = 3
+const max_programadores_disponibles = 5
+const min_programadores_disponibles = 20
 const programadores_disponibles = getRandomNumberBetween(min_programadores_disponibles, max_programadores_disponibles)
 
 
@@ -60,8 +60,6 @@ function getRandomNumberBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-
-
 function getRandomElementOfaList(list) {
     let max_index = list.length - 1
     return list[getRandomNumberBetween(0, max_index)]
@@ -103,7 +101,7 @@ Aqui empiezan las funciones y variables relacionadas con el DOM
 
 // que bien que me vendria react ahora mismo
 // Funciones:
-function change_h2_of_dom(){
+function change_h2_of_dom() {
     h2 = document.querySelector('#are_programers_avalible')
     h2.textContent = "No hay programadores disponibles por el momento :c"
 }
@@ -111,13 +109,28 @@ function change_h2_of_dom(){
 function load_programer(programer) {
     const clases_to_use = 'text-center mt-1 text_size_1'
 
-    let tiempo_libre 
+    let h3_tiempo_libre
+    let boton_contratar = false
     let expeciencia_tiempo = `Tiene: ${programer.expeciencia_tiempo} años de experiencia`
 
     if (programer.tiempo_libre) {
-        tiempo_libre = "¡Esta Disponible!"
+        h3_tiempo_libre = document.createElement('h3')
+        h3_tiempo_libre.textContent = "¡Esta Disponible!"
+        h3_tiempo_libre.classList = 'text-center mt-1 text_size_1 text-success'
+
+        boton_contratar = document.createElement('button')
+        boton_contratar.classList = 'my-1 text_size_1 btn btn-primary w-100'
+        boton_contratar.textContent = '¡Contratar Ya!'
+        boton_contratar.addEventListener('click', () => {
+            programer.sacarDisponible()
+            debugger
+            load_programer()
+
+        })
     } else {
-        tiempo_libre = "No esta disponible"
+        h3_tiempo_libre = document.createElement('h3')
+        h3_tiempo_libre.textContent = "No esta disponible"
+        h3_tiempo_libre.classList = 'text-center mt-1 text_size_1 text-warning'
     }
 
 
@@ -136,16 +149,23 @@ function load_programer(programer) {
     h3_expirience.classList = clases_to_use
     h3_expirience.textContent = expeciencia_tiempo
 
-    const h3_disponible = document.createElement('h3')
-    h3_disponible.classList = clases_to_use
-    h3_disponible.textContent = tiempo_libre
 
-    div.append(h2_name, h3_title, h3_expirience, h3_disponible)
+    div.append(h2_name, h3_title, h3_expirience, h3_tiempo_libre)
+
+    if (boton_contratar) {
+        div.append(boton_contratar)
+    }
 
     let container_content = document.querySelector(".content_1")
-
+    
     container_content.append(div)
 
+}
+
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
 }
 
 function display_all_programers_in_dom() {
@@ -243,7 +263,7 @@ for (let i = 0; i < programadores_disponibles; i++) {
 
 display_all_programers_in_dom()
 
-if(!checks_if_are_avalible_programers()){
+if (!checks_if_are_avalible_programers()) {
     change_h2_of_dom()
 }
 
