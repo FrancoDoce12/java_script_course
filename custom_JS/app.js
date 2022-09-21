@@ -121,7 +121,10 @@ function load_programer(programer) {
         boton_contratar = document.createElement('button')
         boton_contratar.classList = 'my-1 text_size_1 btn btn-primary w-100'
         boton_contratar.textContent = '¡Contratar Ya!'
-        boton_contratar.addEventListener("click",click_contratar(programer))
+        console.log(programer.aTexto())
+        boton_contratar.addEventListener('click', () => {
+            click_contratar(programer)
+        })
     } else {
         h3_tiempo_libre = document.createElement('h3')
         h3_tiempo_libre.textContent = "No esta disponible"
@@ -152,14 +155,16 @@ function load_programer(programer) {
     }
 
     let container_content = document.querySelector(".content_1")
-    
+
     container_content.append(div)
 }
 
-function click_contratar(programer){
-    console.log("cacaa")
+function click_contratar(programer) {
+    console.log("click_contratar")
     programer.sacarDisponible()
-    display_all_programers_in_dom()
+    let container_content = document.querySelector(".content_1")
+    removeAllChildNodes(container_content)
+    start_page()
 }
 
 
@@ -173,6 +178,17 @@ function display_all_programers_in_dom() {
     programadores_a_contratar.forEach(programer => {
         load_programer(programer)
     })
+}
+
+function chechs_if_there_are_programers_to_h2() {
+    if (!checks_if_are_avalible_programers()) {
+        change_h2_of_dom()
+    }
+}
+
+function start_page(){
+    display_all_programers_in_dom()
+    chechs_if_there_are_programers_to_h2()
 }
 
 
@@ -264,9 +280,7 @@ for (let i = 0; i < programadores_disponibles; i++) {
 
 display_all_programers_in_dom()
 
-if (!checks_if_are_avalible_programers()) {
-    change_h2_of_dom()
-}
+chechs_if_there_are_programers_to_h2()
 
 
 

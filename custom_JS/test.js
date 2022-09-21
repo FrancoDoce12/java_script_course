@@ -1,6 +1,7 @@
 /* Este codigo es para hacer pruebas nada mas, no ira en el proyecto final*/
 
 
+
 const clases_to_use = 'text-center mt-1 w-25' 
 
 let namee = 'jorge'
@@ -33,7 +34,12 @@ const h3_disponible = document.createElement('h3')
 h3_disponible.classList = clases_to_use
 h3_disponible.textContent = disponible
 
-div.append(h2_name, h3_title ,h3_expirience ,h3_disponible)
+const caca = document.createElement('button')
+caca.addEventListener("click",() => {console.log("caca")})
+
+
+
+div.append(h2_name, h3_title ,h3_expirience ,h3_disponible,caca)
 
 
 
