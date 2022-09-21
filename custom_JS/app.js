@@ -121,12 +121,7 @@ function load_programer(programer) {
         boton_contratar = document.createElement('button')
         boton_contratar.classList = 'my-1 text_size_1 btn btn-primary w-100'
         boton_contratar.textContent = '¡Contratar Ya!'
-        boton_contratar.addEventListener('click', () => {
-            programer.sacarDisponible()
-            debugger
-            load_programer()
-
-        })
+        boton_contratar.addEventListener("click",click_contratar(programer))
     } else {
         h3_tiempo_libre = document.createElement('h3')
         h3_tiempo_libre.textContent = "No esta disponible"
@@ -159,8 +154,24 @@ function load_programer(programer) {
     let container_content = document.querySelector(".content_1")
     
     container_content.append(div)
-
 }
+
+function click_contratar(programer){
+    programer.sacarDisponible()
+    display_all_programers_in_dom()
+}
+
+
+// NI IDEA DE COMO HACERLO PORQUE NO PUEDO ACCEDER AL PROGRAMADOR
+
+// function set_all_buttons_the_event(){
+//     buttons = document.querySelectorAll(".btn")
+//     buttons.forEach(buton => {
+//         buton.addEventListener("click", ()=>{
+
+//         })
+//     })
+// }
 
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
@@ -267,5 +278,6 @@ if (!checks_if_are_avalible_programers()) {
     change_h2_of_dom()
 }
 
+set_all_buttons_the_event()
 
 
