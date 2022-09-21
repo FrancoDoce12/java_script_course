@@ -42,10 +42,10 @@ class Programador {
         }
     }
     sacarDisponible() {
-        this.tiempo_libre = false
+        this.tiempo_libre = 0
     }
     hacerDisponible() {
-        this.tiempo_libre = true
+        this.tiempo_libre = 1
     }
 
     aTexto() {
@@ -157,21 +157,11 @@ function load_programer(programer) {
 }
 
 function click_contratar(programer){
+    console.log("cacaa")
     programer.sacarDisponible()
     display_all_programers_in_dom()
 }
 
-
-// NI IDEA DE COMO HACERLO PORQUE NO PUEDO ACCEDER AL PROGRAMADOR
-
-// function set_all_buttons_the_event(){
-//     buttons = document.querySelectorAll(".btn")
-//     buttons.forEach(buton => {
-//         buton.addEventListener("click", ()=>{
-
-//         })
-//     })
-// }
 
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
@@ -278,6 +268,6 @@ if (!checks_if_are_avalible_programers()) {
     change_h2_of_dom()
 }
 
-set_all_buttons_the_event()
+
 
 
