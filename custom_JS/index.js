@@ -25,33 +25,6 @@ let programadores_a_contratar = []
 
 /* Aqui estan todas las clases */
 
-class Programador {
-    constructor(nombre, expeciencia_tiempo, titulo, tiempo_libre) {
-        this.nombre = nombre
-        this.expeciencia_tiempo = expeciencia_tiempo
-        this.titulo = titulo
-        this.tiempo_libre = tiempo_libre
-    }
-    contratar() {
-        if (this.tiempo_libre) {
-            this.tiempo_libre = false
-            alert(`Programador${this.nombre} contratado`)
-        }
-        else {
-            alert(`El Programador ${this.nombre} Ya a sido contratado por otra persona`)
-        }
-    }
-    sacarDisponible() {
-        this.tiempo_libre = 0
-    }
-    hacerDisponible() {
-        this.tiempo_libre = 1
-    }
-
-    aTexto() {
-        return `${this.nombre}:\nEs "${this.titulo}"\nTiene ${this.expeciencia_tiempo} Años de experiencia\n¿Disponible? ${Boolean(this.tiempo_libre)}`
-    }
-}
 
 
 /*La funcion getRandomNumberBetween() la saque de internet */
@@ -175,6 +148,7 @@ function removeAllChildNodes(parent) {
 }
 
 function display_all_programers_in_dom() {
+    console.log(programadores_a_contratar)
     programadores_a_contratar.forEach(programer => {
         load_programer(programer)
     })
@@ -186,7 +160,7 @@ function chechs_if_there_are_programers_to_h2() {
     }
 }
 
-function start_page(){
+function start_page() {
     display_all_programers_in_dom()
     chechs_if_there_are_programers_to_h2()
 }
@@ -265,13 +239,32 @@ function filterProgramerByFreeTime(tiempo_libre) {
     }
 }
 
+// Aqui empiezan las funciones referidas con el LOCAL STORAGE
+
+function check_local_storage() {
+    if (localStorage.getItem('programadores') === null) {
+        localStorage.setItem('programadores',JSON.stringify([]) )
+    }
+}
+
+function pushear_programadores_guardados(){
+    let programadores_array = JSON.parse( localStorage.getItem('programadores') )
+    console.log(programadores_array)
+    programadores_array.forEach(programer => {
+        let new_programer = new Programador(
+            programer.nombre, programer.expeciencia_tiempo, programer.titulo, true
+        )
+        programadores_a_contratar.push(new_programer)
+    } )
+}
 
 
 
 /* Aqui empieza la ejecucion del programa */
 
+check_local_storage()
 
-
+pushear_programadores_guardados()
 
 
 for (let i = 0; i < programadores_disponibles; i++) {
@@ -281,7 +274,6 @@ for (let i = 0; i < programadores_disponibles; i++) {
 display_all_programers_in_dom()
 
 chechs_if_there_are_programers_to_h2()
-
 
 
 
