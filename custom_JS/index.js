@@ -96,6 +96,7 @@ function load_programer(programer) {
         boton_contratar.textContent = '¡Contratar Ya!'
         console.log(programer.aTexto())
         boton_contratar.addEventListener('click', () => {
+            notify(`Contrataste a ${programer.nombre}`)
             click_contratar(programer)
         })
     } else {
@@ -133,7 +134,6 @@ function load_programer(programer) {
 }
 
 function click_contratar(programer) {
-    console.log("click_contratar")
     programer.sacarDisponible()
     let container_content = document.querySelector(".content_1")
     removeAllChildNodes(container_content)
@@ -157,6 +157,7 @@ function display_all_programers_in_dom() {
 function chechs_if_there_are_programers_to_h2() {
     if (!checks_if_are_avalible_programers()) {
         change_h2_of_dom()
+        notify("Todos los programadores han sido contratados")
     }
 }
 
@@ -164,6 +165,7 @@ function start_page() {
     display_all_programers_in_dom()
     chechs_if_there_are_programers_to_h2()
 }
+
 
 
 
@@ -243,19 +245,19 @@ function filterProgramerByFreeTime(tiempo_libre) {
 
 function check_local_storage() {
     if (localStorage.getItem('programadores') === null) {
-        localStorage.setItem('programadores',JSON.stringify([]) )
+        localStorage.setItem('programadores', JSON.stringify([]))
     }
 }
 
-function pushear_programadores_guardados(){
-    let programadores_array = JSON.parse( localStorage.getItem('programadores') )
+function pushear_programadores_guardados() {
+    let programadores_array = JSON.parse(localStorage.getItem('programadores'))
     console.log(programadores_array)
     programadores_array.forEach(programer => {
         let new_programer = new Programador(
             programer.nombre, programer.expeciencia_tiempo, programer.titulo, true
         )
         programadores_a_contratar.push(new_programer)
-    } )
+    })
 }
 
 
@@ -274,6 +276,9 @@ for (let i = 0; i < programadores_disponibles; i++) {
 display_all_programers_in_dom()
 
 chechs_if_there_are_programers_to_h2()
+
+
+
 
 
 

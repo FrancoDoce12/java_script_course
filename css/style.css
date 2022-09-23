@@ -2,6 +2,33 @@ body {
     color: white
 }
 
+/* Notification */
+
+.notification {
+    height: 100px;
+    margin: 10px;
+    position: fixed;
+    border-radius: 10%;
+
+    top: 0;
+    right: 0;
+
+    border: 6px solid red;
+    z-index: 2;
+}
+
+#x_of_notification{
+    color: red;
+    text-shadow: 1px 1px 3px black;
+    cursor: pointer;
+}
+
+.w_1fr {
+    height: 33%;
+}
+
+/* End of Notification */
+
 .navbar-custom {
     height: 60px;
 

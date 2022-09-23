@@ -41,6 +41,8 @@ function send_info(){
     let programadores_guardados = JSON.parse(localStorage.getItem('programadores'))
     programadores_guardados.push(programador_registrado)
     localStorage.setItem('programadores',JSON.stringify(programadores_guardados))
+
+    notify("Programador Registrado con exito!")
 }
 
 // Ejecucion:
