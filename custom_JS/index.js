@@ -244,9 +244,15 @@ function filterProgramerByFreeTime(tiempo_libre) {
 // Aqui empiezan las funciones referidas con el LOCAL STORAGE
 
 function check_local_storage() {
-    if (localStorage.getItem('programadores') === null) {
-        localStorage.setItem('programadores', JSON.stringify([]))
-    }
+    localStorage.setItem(
+        'programadores',
+        localStorage.getItem('programadores') ?? JSON.stringify([])
+    )
+
+}
+
+function clear_local_storage() {
+    localStorage.setItem('programadores', JSON.stringify([]))
 }
 
 function pushear_programadores_guardados() {
@@ -263,6 +269,11 @@ function pushear_programadores_guardados() {
 
 
 /* Aqui empieza la ejecucion del programa */
+
+
+localStorage.setItem('programadores', undefined)
+
+
 
 check_local_storage()
 
