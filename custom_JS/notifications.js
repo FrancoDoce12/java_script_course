@@ -46,8 +46,13 @@ function add_event_to_close_notification() {
     x_button.addEventListener('click', () => { delete_notification() })
 }
 
-function notify(message) {
+function old_notify(message) {
     delete_notification()
     add_notification(message)
     add_event_to_close_notification()
 }
+
+function notify(title) {
+    swal(title, "", "success")
+}
+

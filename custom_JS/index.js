@@ -186,13 +186,10 @@ function filterProgramerByName(name) {
     alert("En la consola estan los resultados")
     let result_get = null
     result_get = programadores_a_contratar.filter(programer => programer.nombre === name)
-    debugger
     if (typeof result_get !== "undefined" && result_get.length === 0) {
-        debugger
         console.log("No se encontraron resultados coincidentes")
         return false
     } else if (result_get.length == 0) {
-        debugger
         console.log("No se encontraron resultados coincidentes")
         return false
     } else {
@@ -244,11 +241,9 @@ function filterProgramerByFreeTime(tiempo_libre) {
 // Aqui empiezan las funciones referidas con el LOCAL STORAGE
 
 function check_local_storage() {
-    localStorage.setItem(
-        'programadores',
-        localStorage.getItem('programadores') ?? JSON.stringify([])
-    )
-
+    if (localStorage.getItem('programadores') === null) {
+        localStorage.setItem('programadores', JSON.stringify([]))
+    }
 }
 
 function clear_local_storage() {
@@ -256,7 +251,9 @@ function clear_local_storage() {
 }
 
 function pushear_programadores_guardados() {
+    debugger
     let programadores_array = JSON.parse(localStorage.getItem('programadores'))
+    debugger
     console.log(programadores_array)
     programadores_array.forEach(programer => {
         let new_programer = new Programador(
@@ -271,7 +268,6 @@ function pushear_programadores_guardados() {
 /* Aqui empieza la ejecucion del programa */
 
 
-localStorage.setItem('programadores', undefined)
 
 
 
