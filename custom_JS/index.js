@@ -86,6 +86,9 @@ function load_programer(programer) {
     let boton_contratar = false
     let expeciencia_tiempo = `Tiene: ${programer.expeciencia_tiempo} años de experiencia`
 
+
+
+
     if (programer.tiempo_libre) {
         h3_tiempo_libre = document.createElement('h3')
         h3_tiempo_libre.textContent = "¡Esta Disponible!"
@@ -124,9 +127,11 @@ function load_programer(programer) {
 
     div.append(h2_name, h3_title, h3_expirience, h3_tiempo_libre)
 
-    if (boton_contratar) {
-        div.append(boton_contratar)
-    }
+
+    boton_contratar?div.append(boton_contratar):console.log()
+    // if (boton_contratar) {
+    //     div.append(boton_contratar)
+    // }
 
     let container_content = document.querySelector(".content_1")
 
