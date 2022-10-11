@@ -1,0 +1,38 @@
+[
+    {
+        "nombre": "Martín García",
+        "expeciencia_tiempo": 2,
+        "titulo": "Data Scientist",
+        "tiempo_libre": false
+    },
+    {
+        "nombre": "Martín González",
+        "expeciencia_tiempo": 13,
+        "titulo": "Full Stack Developer",
+        "tiempo_libre": true
+    },
+    {
+        "nombre": "Alejandro López",
+        "expeciencia_tiempo": 6,
+        "titulo": "Full Stack Developer",
+        "tiempo_libre": false
+    },
+    {
+        "nombre": "Rodríguez Lucas",
+        "expeciencia_tiempo": 6,
+        "titulo": "Back End Developer",
+        "tiempo_libre": true
+    },
+    {
+        "nombre": "Leo González",
+        "expeciencia_tiempo": 20,
+        "titulo": "Administation Cross Plataform Developer",
+        "tiempo_libre": true
+    },
+    {
+        "nombre": "Hugo Fernández",
+        "expeciencia_tiempo": 4,
+        "titulo": "Back End Developer",
+        "tiempo_libre": true
+    }
+]

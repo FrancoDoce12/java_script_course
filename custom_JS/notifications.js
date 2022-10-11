@@ -52,7 +52,27 @@ function old_notify(message) {
     add_event_to_close_notification()
 }
 
-function notify(title) {
-    swal(title, "", "success")
+function notify(title_) {
+    swal({
+        title: title_,
+        icon: "success"
+    })
+}
+
+function notify_reload_programers() {
+    debugger
+    var return_value 
+    swal({
+        title: "¿Estas seguro de que quieres recargar los programadores?",
+        text: "¡todos los datos guardados en la base de datos se perderán!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            return_value = willDelete
+        })
+        debugger
+    return return_value
 }
 

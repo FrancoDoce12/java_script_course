@@ -66,14 +66,79 @@ function checks_if_are_avalible_programers() {
     return are_avalibles
 }
 
+
+
+function programadroes_aleatorios(){
+    var programerss = []
+    for (let i = 0; i < programadores_disponibles; i++) {
+        programerss.push(getRandomProgramer())
+    }
+    return programerss
+
+}
+
+// aqui empiezan funciones refericas con el fetch y con la interaccion con la base de datos
+
+function reload_programers(){
+    //clear_data_base()
+    // aca iva a hacer una funcion para cargar programadores aleatorios en la base de datos
+    //load_programers_from_db()
+    notify("Esta funcion aun no esta implementada")
+    console.error("Funcion no implementada");
+}
+
+
+function load_programers_from_db(){
+    programadores_a_contratar = []
+    fetch("../db.json")
+        .then(data => data.json())
+        .then(data => data.forEach(programer => {
+            let new_programer = new Programador(
+                programer.nombre, programer.expeciencia_tiempo, programer.titulo, true
+            )
+            programadores_a_contratar.push(new_programer)
+        }))
+        
+}
+
+
+
+// la funcion de abajo no funciona pero la dejo para que vean la intencion que tenia shfas
+function clear_data_base(){
+    fetch("../db.json",{
+        method: "POST",
+        body: JSON.stringify([])
+    })
+}
+
+
+
 /*
 Aqui empiezan las funciones y variables relacionadas con el DOM 
 */
 //Variables :
 
 
-// que bien que me vendria react ahora mismo
 // Funciones:
+function add_evet_listener_to_button_reload_programers() {
+
+
+    var button = document.querySelector("#reload_programers")
+    button.addEventListener('click', () => {
+        if (notify_reload_programers()) {
+            reload_programers()
+            swal({
+                title: "Programadores recargados",
+                icon: "success"
+            })
+        } else {
+            swal({
+                title: "Funcion aún no implementada",
+            })
+        }
+    })
+}
+
 function change_h2_of_dom() {
     h2 = document.querySelector('#are_programers_avalible')
     h2.textContent = "No hay programadores disponibles por el momento :c"
@@ -97,7 +162,6 @@ function load_programer(programer) {
         boton_contratar = document.createElement('button')
         boton_contratar.classList = 'my-1 text_size_1 btn btn-primary w-100'
         boton_contratar.textContent = '¡Contratar Ya!'
-        console.log(programer.aTexto())
         boton_contratar.addEventListener('click', () => {
             notify(`Contrataste a ${programer.nombre}`)
             click_contratar(programer)
@@ -128,7 +192,7 @@ function load_programer(programer) {
     div.append(h2_name, h3_title, h3_expirience, h3_tiempo_libre)
 
 
-    boton_contratar?div.append(boton_contratar):console.log()
+    boton_contratar ? div.append(boton_contratar) : console.log()
     // if (boton_contratar) {
     //     div.append(boton_contratar)
     // }
@@ -142,7 +206,7 @@ function click_contratar(programer) {
     programer.sacarDisponible()
     let container_content = document.querySelector(".content_1")
     removeAllChildNodes(container_content)
-    start_page()
+    start_page(programadores_a_contratar)
 }
 
 
@@ -152,9 +216,8 @@ function removeAllChildNodes(parent) {
     }
 }
 
-function display_all_programers_in_dom() {
-    console.log(programadores_a_contratar)
-    programadores_a_contratar.forEach(programer => {
+function display_programers_in_dom(list_of_programers) {
+    list_of_programers.forEach(programer => {
         load_programer(programer)
     })
 }
@@ -166,8 +229,8 @@ function chechs_if_there_are_programers_to_h2() {
     }
 }
 
-function start_page() {
-    display_all_programers_in_dom()
+function start_page(list_of_programers) {
+    display_programers_in_dom(list_of_programers)
     chechs_if_there_are_programers_to_h2()
 }
 
@@ -187,61 +250,61 @@ function getRandomProgramer() {
 
 /* Aqui empieza las funciones de filtrado de usuarios */
 
-function filterProgramerByName(name) {
-    alert("En la consola estan los resultados")
-    let result_get = null
-    result_get = programadores_a_contratar.filter(programer => programer.nombre === name)
-    if (typeof result_get !== "undefined" && result_get.length === 0) {
-        console.log("No se encontraron resultados coincidentes")
-        return false
-    } else if (result_get.length == 0) {
-        console.log("No se encontraron resultados coincidentes")
-        return false
-    } else {
-        console.log("Estos son los resultados encontrados:\n")
-        displayListOfProgramers(result_get)
-        return true
-    }
-}
+// function filterProgramerByName(name) {
+//     alert("En la consola estan los resultados")
+//     let result_get = null
+//     result_get = programadores_a_contratar.filter(programer => programer.nombre === name)
+//     if (typeof result_get !== "undefined" && result_get.length === 0) {
+//         console.log("No se encontraron resultados coincidentes")
+//         return false
+//     } else if (result_get.length == 0) {
+//         console.log("No se encontraron resultados coincidentes")
+//         return false
+//     } else {
+//         console.log("Estos son los resultados encontrados:\n")
+//         displayListOfProgramers(result_get)
+//         return true
+//     }
+// }
 
-function filterProgramerByTitle(Title) {
-    alert("En la consola estan los resultados")
-    const result_get = programadores_a_contratar.filter(programer => programer.titulo === Title)
-    if (result_get === null) {
-        console.log("No se encontraron resultados coincidentes")
-        return false
-    } else {
-        console.log("Estos son los resultados encontrados:\n")
-        displayListOfProgramers(result_get)
-        return true
-    }
-}
+// function filterProgramerByTitle(Title) {
+//     alert("En la consola estan los resultados")
+//     const result_get = programadores_a_contratar.filter(programer => programer.titulo === Title)
+//     if (result_get === null) {
+//         console.log("No se encontraron resultados coincidentes")
+//         return false
+//     } else {
+//         console.log("Estos son los resultados encontrados:\n")
+//         displayListOfProgramers(result_get)
+//         return true
+//     }
+// }
 
-function filterProgramerByWorkExpirence(expeciencia_tiempo) {
-    alert("En la consola estan los resultados")
-    const result_get = programadores_a_contratar.filter(programer => programer.expeciencia_tiempo >= expeciencia_tiempo)
-    if (result_get === null) {
-        console.log("No se encontraron resultados coincidentes")
-        return false
-    } else {
-        console.log("Estos son los resultados encontrados:\n")
-        displayListOfProgramers(result_get)
-        return true
-    }
-}
+// function filterProgramerByWorkExpirence(expeciencia_tiempo) {
+//     alert("En la consola estan los resultados")
+//     const result_get = programadores_a_contratar.filter(programer => programer.expeciencia_tiempo >= expeciencia_tiempo)
+//     if (result_get === null) {
+//         console.log("No se encontraron resultados coincidentes")
+//         return false
+//     } else {
+//         console.log("Estos son los resultados encontrados:\n")
+//         displayListOfProgramers(result_get)
+//         return true
+//     }
+// }
 
-function filterProgramerByFreeTime(tiempo_libre) {
-    alert("En la consola estan los resultados")
-    const result_get = programadores_a_contratar.filter(programer => Boolean(programer.tiempo_libre) === Boolean(tiempo_libre))
-    if (result_get === null) {
-        console.log("No se encontraron resultados coincidentes")
-        return false
-    } else {
-        console.log("Estos son los resultados encontrados:\n")
-        displayListOfProgramers(result_get)
-        return true
-    }
-}
+// function filterProgramerByFreeTime(tiempo_libre) {
+//     alert("En la consola estan los resultados")
+//     const result_get = programadores_a_contratar.filter(programer => Boolean(programer.tiempo_libre) === Boolean(tiempo_libre))
+//     if (result_get === null) {
+//         console.log("No se encontraron resultados coincidentes")
+//         return false
+//     } else {
+//         console.log("Estos son los resultados encontrados:\n")
+//         displayListOfProgramers(result_get)
+//         return true
+//     }
+// }
 
 // Aqui empiezan las funciones referidas con el LOCAL STORAGE
 
@@ -256,9 +319,7 @@ function clear_local_storage() {
 }
 
 function pushear_programadores_guardados() {
-    debugger
     let programadores_array = JSON.parse(localStorage.getItem('programadores'))
-    debugger
     console.log(programadores_array)
     programadores_array.forEach(programer => {
         let new_programer = new Programador(
@@ -281,16 +342,19 @@ check_local_storage()
 pushear_programadores_guardados()
 
 
-for (let i = 0; i < programadores_disponibles; i++) {
-    programadores_a_contratar.push(getRandomProgramer())
-}
 
-display_all_programers_in_dom()
+programadores_a_contratar = programadroes_aleatorios()
+
+
+display_programers_in_dom(programadores_a_contratar)
+
+add_evet_listener_to_button_reload_programers()
 
 chechs_if_there_are_programers_to_h2()
 
+// reload_programers()
 
-
+load_programers_from_db()
 
 
 
