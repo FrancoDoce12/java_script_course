@@ -1,0 +1,19 @@
+{
+  "name": "cursojavascript",
+  "version": "1.0.0",
+  "description": "proyect used while i was lerming javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FrancoDoce12/java_script_course.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FrancoDoce12/java_script_course/issues"
+  },
+  "homepage": "https://github.com/FrancoDoce12/java_script_course#readme"
+}

@@ -27,8 +27,5 @@ class Programador {
     }
 }
 
-const key_of_programers = 'programers'
 
-function get_programers_from_storage(){
-    JSON.parse( localStorage.getItem(key_of_programers) )
-}
+

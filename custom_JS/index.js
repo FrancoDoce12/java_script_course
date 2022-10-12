@@ -1,5 +1,9 @@
 
 /* aqui se declaram variables globales nesesarias para el funcionamiento del programa*/
+
+
+//  variables relacionadas con generar programadores aleatorios
+
 const max_programadores_disponibles = 5
 const min_programadores_disponibles = 20
 const programadores_disponibles = getRandomNumberBetween(min_programadores_disponibles, max_programadores_disponibles)
@@ -19,11 +23,15 @@ const posibles_trabajos = [
     "Administation Cross Plataform Developer"
 ]
 
+// el resto de las variables globales
+
 let programadores_a_contratar = []
 
+const key_of_programers = 'programers'
+
+// la clase programador esta en deffinitions,js
 
 
-/* Aqui estan todas las clases */
 
 
 
@@ -51,10 +59,6 @@ function displayAllProgramers() {
     return display_programers
 }
 
-function displayListOfProgramers(list_of_programers) {
-    let new_lines = "\n\n"
-    list_of_programers.forEach(programer => console.log(new_lines + programer.aTexto()))
-}
 
 function checks_if_are_avalible_programers() {
     let are_avalibles = false
@@ -67,19 +71,63 @@ function checks_if_are_avalible_programers() {
 }
 
 
-
-function programadroes_aleatorios(){
-    var programerss = []
+function programadroes_aleatorios() {
+    let programerss = []
     for (let i = 0; i < programadores_disponibles; i++) {
         programerss.push(getRandomProgramer())
     }
     return programerss
-
 }
+
+function transformar_programador_obj_a_class(array_objetos_programer, todos_disponibles){
+    array_programadores = []
+    array_objetos_programer.forEach(programer => {
+        array_programadores.append(
+            new Programador(
+                programer.nombre, programer.expeciencia_tiempo, programer.titulo, todos_disponibles? todos_disponibles : programer.tiempo_libre
+            )
+        )
+    })
+    return array_programadores
+}
+
+
 
 // aqui empiezan funciones refericas con el fetch y con la interaccion con la base de datos
 
-function reload_programers(){
+
+
+
+function load_programers_from_db() {
+    
+    debugger
+    fetch("../db.json")
+        .then(data => data.json())
+        .then(data => console.log(data))
+        .then(data => transformar_programador_obj_a_class(data))
+        .then(data => put_programers_in_dom(data))
+}
+
+function put_programers_in_dom(data){
+    programadores_a_contratar = data
+    clear_dom()
+    start_page(data)
+}
+
+
+
+// las siguientes funciones no funcionan o su funcionalidad no esta completa
+
+// la funcion de abajo no funciona pero la dejo para que vean la intencion que tenia shfas
+
+function clear_data_base() {
+    fetch("../db.json", {
+        method: "POST",
+        body: JSON.stringify([])
+    })
+}
+
+function reload_programers() {
     //clear_data_base()
     // aca iva a hacer una funcion para cargar programadores aleatorios en la base de datos
     //load_programers_from_db()
@@ -87,43 +135,22 @@ function reload_programers(){
     console.error("Funcion no implementada");
 }
 
-
-function load_programers_from_db(){
-    programadores_a_contratar = []
-    fetch("../db.json")
-        .then(data => data.json())
-        .then(data => data.forEach(programer => {
-            let new_programer = new Programador(
-                programer.nombre, programer.expeciencia_tiempo, programer.titulo, true
-            )
-            programadores_a_contratar.push(new_programer)
-        }))
-        
-}
-
-
-
-// la funcion de abajo no funciona pero la dejo para que vean la intencion que tenia shfas
-function clear_data_base(){
-    fetch("../db.json",{
-        method: "POST",
-        body: JSON.stringify([])
-    })
-}
-
-
-
 /*
-Aqui empiezan las funciones y variables relacionadas con el DOM 
+Aqui empiezan las funciones relacionadas con el DOM 
 */
-//Variables :
 
 
 // Funciones:
+
+function clear_dom(){
+    let container_content = document.querySelector(".content_1")
+    removeAllChildNodes(container_content)
+}
+
 function add_evet_listener_to_button_reload_programers() {
 
 
-    var button = document.querySelector("#reload_programers")
+    let button = document.querySelector("#reload_programers")
     button.addEventListener('click', () => {
         if (notify_reload_programers()) {
             reload_programers()
@@ -204,8 +231,7 @@ function load_programer(programer) {
 
 function click_contratar(programer) {
     programer.sacarDisponible()
-    let container_content = document.querySelector(".content_1")
-    removeAllChildNodes(container_content)
+    clear_dom()
     start_page(programadores_a_contratar)
 }
 
@@ -308,26 +334,30 @@ function getRandomProgramer() {
 
 // Aqui empiezan las funciones referidas con el LOCAL STORAGE
 
-function check_local_storage() {
-    if (localStorage.getItem('programadores') === null) {
-        localStorage.setItem('programadores', JSON.stringify([]))
-    }
-}
+// function check_local_storage() {
+//     if (localStorage.getItem('programadores') === null) {
+//         localStorage.setItem('programadores', JSON.stringify([]))
+//     }
+// }
 
-function clear_local_storage() {
-    localStorage.setItem('programadores', JSON.stringify([]))
-}
+// function clear_local_storage() {
+//     localStorage.setItem('programadores', JSON.stringify([]))
+// }
 
-function pushear_programadores_guardados() {
-    let programadores_array = JSON.parse(localStorage.getItem('programadores'))
-    console.log(programadores_array)
-    programadores_array.forEach(programer => {
-        let new_programer = new Programador(
-            programer.nombre, programer.expeciencia_tiempo, programer.titulo, true
-        )
-        programadores_a_contratar.push(new_programer)
-    })
-}
+// function pushear_programadores_guardados() {
+//     let programadores_array = JSON.parse(localStorage.getItem('programadores'))
+//     console.log(programadores_array)
+//     programadores_array.forEach(programer => {
+//         let new_programer = new Programador(
+//             programer.nombre, programer.expeciencia_tiempo, programer.titulo, true
+//         )
+//         programadores_a_contratar.push(new_programer)
+//     })
+// }
+
+// function get_programers_from_storage(){
+//     JSON.parse( localStorage.getItem(key_of_programers) )
+// }
 
 
 
@@ -337,11 +367,11 @@ function pushear_programadores_guardados() {
 
 
 
-check_local_storage()
+//check_local_storage()
 
-pushear_programadores_guardados()
+//pushear_programadores_guardados()
 
-
+load_programers_from_db()
 
 programadores_a_contratar = programadroes_aleatorios()
 
@@ -354,7 +384,6 @@ chechs_if_there_are_programers_to_h2()
 
 // reload_programers()
 
-load_programers_from_db()
 
 
 
