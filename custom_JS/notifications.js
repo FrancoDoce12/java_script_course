@@ -59,20 +59,13 @@ function notify(title_) {
     })
 }
 
-function notify_reload_programers() {
-    debugger
-    var return_value 
-    swal({
-        title: "¿Estas seguro de que quieres recargar los programadores?",
-        text: "¡todos los datos guardados en la base de datos se perderán!",
+async function notify_reload_programers() {
+    return await  swal({
+        title: "¿Estas seguro de que quieres restaurar los datos?",
+        text: "¡todos los cambios efectuados se perderán!",
         icon: "warning",
         buttons: true,
         dangerMode: true,
     })
-        .then((willDelete) => {
-            return_value = willDelete
-        })
-        debugger
-    return return_value
 }
 

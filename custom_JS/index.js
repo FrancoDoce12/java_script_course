@@ -27,7 +27,13 @@ const posibles_trabajos = [
 
 let programadores_a_contratar = []
 
+// variables de referencia con la local storage
+
 const key_of_programers = 'programers'
+
+// changes es un objeto que basicamente representa la ruta de cambios echos
+const key_of_changes = 'changes'
+
 
 // la clase programador esta en deffinitions,js
 
@@ -79,12 +85,12 @@ function programadroes_aleatorios() {
     return programerss
 }
 
-function transformar_programador_obj_a_class(array_objetos_programer, todos_disponibles){
-    array_programadores = []
+function transformar_programador_obj_a_class(array_objetos_programer, todos_disponibles) {
+    let array_programadores = []
     array_objetos_programer.forEach(programer => {
-        array_programadores.append(
+        array_programadores.push(
             new Programador(
-                programer.nombre, programer.expeciencia_tiempo, programer.titulo, todos_disponibles? todos_disponibles : programer.tiempo_libre
+                programer.nombre, programer.expeciencia_tiempo, programer.titulo, todos_disponibles ? todos_disponibles : programer.tiempo_libre
             )
         )
     })
@@ -98,17 +104,24 @@ function transformar_programador_obj_a_class(array_objetos_programer, todos_disp
 
 
 
-function load_programers_from_db() {
-    
+async function load_programers_from_db() {
+
+    try {
+        let data = await (await fetch("../db.json")).json()
+        put_programers_in_dom(transformar_programador_obj_a_class(data))
+        chechs_if_there_are_programers_to_h2()
+    }
+    catch (error) {
+        console.error(error)
+    }
+
     debugger
-    fetch("../db.json")
-        .then(data => data.json())
-        .then(data => console.log(data))
-        .then(data => transformar_programador_obj_a_class(data))
-        .then(data => put_programers_in_dom(data))
+    // load_changes_and_programers()
+    //put_programers_in_dom(programadores_a_contratar)
+    debugger
 }
 
-function put_programers_in_dom(data){
+function put_programers_in_dom(data) {
     programadores_a_contratar = data
     clear_dom()
     start_page(data)
@@ -116,33 +129,14 @@ function put_programers_in_dom(data){
 
 
 
-// las siguientes funciones no funcionan o su funcionalidad no esta completa
-
-// la funcion de abajo no funciona pero la dejo para que vean la intencion que tenia shfas
-
-function clear_data_base() {
-    fetch("../db.json", {
-        method: "POST",
-        body: JSON.stringify([])
-    })
-}
-
-function reload_programers() {
-    //clear_data_base()
-    // aca iva a hacer una funcion para cargar programadores aleatorios en la base de datos
-    //load_programers_from_db()
-    notify("Esta funcion aun no esta implementada")
-    console.error("Funcion no implementada");
-}
-
 /*
-Aqui empiezan las funciones relacionadas con el DOM 
+Aqui empiezan las funciones relacionadas con el DOM
 */
 
 
 // Funciones:
 
-function clear_dom(){
+function clear_dom() {
     let container_content = document.querySelector(".content_1")
     removeAllChildNodes(container_content)
 }
@@ -151,16 +145,18 @@ function add_evet_listener_to_button_reload_programers() {
 
 
     let button = document.querySelector("#reload_programers")
-    button.addEventListener('click', () => {
-        if (notify_reload_programers()) {
-            reload_programers()
+    button.addEventListener('click', async () => {
+        let caca = await notify_reload_programers()
+        if (caca) {
+            restaurar_datos()
+            // cargar denuevo los datos y mostrar los datos actualizados
             swal({
-                title: "Programadores recargados",
+                title: "Datos Restaurados",
                 icon: "success"
             })
         } else {
             swal({
-                title: "Funcion aún no implementada",
+                title: "Accion cancelada",
             })
         }
     })
@@ -251,7 +247,7 @@ function display_programers_in_dom(list_of_programers) {
 function chechs_if_there_are_programers_to_h2() {
     if (!checks_if_are_avalible_programers()) {
         change_h2_of_dom()
-        notify("Todos los programadores han sido contratados")
+        notify("Se acabaron los programadores disponibles")
     }
 }
 
@@ -334,15 +330,27 @@ function getRandomProgramer() {
 
 // Aqui empiezan las funciones referidas con el LOCAL STORAGE
 
+
+// function
+
+
+
+
 // function check_local_storage() {
 //     if (localStorage.getItem('programadores') === null) {
 //         localStorage.setItem('programadores', JSON.stringify([]))
 //     }
 // }
 
-// function clear_local_storage() {
-//     localStorage.setItem('programadores', JSON.stringify([]))
-// }
+function clear_local_storage() {
+    localStorage.setItem(key_of_programers, JSON.stringify([]))
+    // changes es un objeto que basicamente representa la ruta de cambios echos
+    localStorage.setItem(key_of_changes, JSON.stringify({}))
+}
+
+function load_changes_and_programers(){
+    
+}
 
 // function pushear_programadores_guardados() {
 //     let programadores_array = JSON.parse(localStorage.getItem('programadores'))
@@ -367,20 +375,13 @@ function getRandomProgramer() {
 
 
 
-//check_local_storage()
-
-//pushear_programadores_guardados()
 
 load_programers_from_db()
-
-programadores_a_contratar = programadroes_aleatorios()
-
 
 display_programers_in_dom(programadores_a_contratar)
 
 add_evet_listener_to_button_reload_programers()
 
-chechs_if_there_are_programers_to_h2()
 
 // reload_programers()
 
