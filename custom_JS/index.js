@@ -27,6 +27,8 @@ const posibles_trabajos = [
 
 let programadores_a_contratar = []
 
+let original_data_base
+
 // variables de referencia con la local storage
 
 const key_of_programers = 'programers'
@@ -110,21 +112,21 @@ async function load_programers_from_db() {
         let data = await (await fetch("../db.json")).json()
         put_programers_in_dom(transformar_programador_obj_a_class(data))
         chechs_if_there_are_programers_to_h2()
+        if (!original_data_base) {
+            original_data_base = [...transformar_programador_obj_a_class(data)]
+        }
     }
     catch (error) {
         console.error(error)
     }
-
     debugger
-    // load_changes_and_programers()
-    //put_programers_in_dom(programadores_a_contratar)
-    debugger
+    load_changes_and_programers()
 }
 
 function put_programers_in_dom(data) {
-    programadores_a_contratar = data
+    programadores_a_contratar = [...data]
     clear_dom()
-    start_page(data)
+    start_page(programadores_a_contratar)
 }
 
 
@@ -143,13 +145,12 @@ function clear_dom() {
 
 function add_evet_listener_to_button_reload_programers() {
 
-
     let button = document.querySelector("#reload_programers")
     button.addEventListener('click', async () => {
         let caca = await notify_reload_programers()
         if (caca) {
-            restaurar_datos()
-            // cargar denuevo los datos y mostrar los datos actualizados
+            clear_all_local_storage()
+            load_programers_from_db()
             swal({
                 title: "Datos Restaurados",
                 icon: "success"
@@ -188,6 +189,7 @@ function load_programer(programer) {
         boton_contratar.addEventListener('click', () => {
             notify(`Contrataste a ${programer.nombre}`)
             click_contratar(programer)
+            save_changes()
         })
     } else {
         h3_tiempo_libre = document.createElement('h3')
@@ -226,7 +228,7 @@ function load_programer(programer) {
 }
 
 function click_contratar(programer) {
-    programer.sacarDisponible()
+    programadores_a_contratar[programadores_a_contratar.indexOf(programer)].tiempo_libre = false
     clear_dom()
     start_page(programadores_a_contratar)
 }
@@ -336,21 +338,77 @@ function getRandomProgramer() {
 
 
 
-// function check_local_storage() {
-//     if (localStorage.getItem('programadores') === null) {
-//         localStorage.setItem('programadores', JSON.stringify([]))
-//     }
-// }
+function check_local_storage() {
+    if (localStorage.getItem(key_of_programers) == null) {
+        localStorage.setItem(key_of_programers, JSON.stringify([]))
+    }
+    if (localStorage.getItem(key_of_changes) == null) {
+        localStorage.setItem(key_of_changes, JSON.stringify({
+            'programers': {}
+        }))
+    }
+}
 
-function clear_local_storage() {
+function clear_all_local_storage() {
     localStorage.setItem(key_of_programers, JSON.stringify([]))
     // changes es un objeto que basicamente representa la ruta de cambios echos
-    localStorage.setItem(key_of_changes, JSON.stringify({}))
+    clear_changes_local_storage()
 }
 
-function load_changes_and_programers(){
-    
+function clear_changes_local_storage() {
+    localStorage.setItem(key_of_changes, JSON.stringify({
+        'programers': {},
+        'new_programers':[]
+    }))
 }
+
+function load_changes_and_programers() {
+    debugger
+    load_changes()
+    load_programers()
+    clear_dom()
+    start_page(programadores_a_contratar)
+}
+
+function load_changes(){
+    debugger
+    let data = get_somthing_from_local_storage(key_of_changes)['programers']
+    for (const [key, value] of Object.entries(data)) {
+        debugger
+        programadores_a_contratar[key].tiempo_libre = value
+    }
+}
+
+function load_programers(){
+    debugger
+    let data = get_somthing_from_local_storage(key_of_changes)['new_programers']
+    programadores_a_contratar = [...programadores_a_contratar, ...transformar_programador_obj_a_class(data)]
+    debugger
+}
+
+function get_somthing_from_local_storage(key){
+    return JSON.parse(localStorage.getItem(key))
+}
+
+// es muy malo y muy poco performante este sistema de guardado de datos, shsdhsagf
+function save_changes() {
+    for (const [i, programer] of programadores_a_contratar.entries()) {
+        if (!(programer.tiempo_libre == original_data_base[i].tiempo_libre)) {
+            
+            let data = get_somthing_from_local_storage(key_of_changes)
+            data['programers'][i] = programer.tiempo_libre
+            localStorage.setItem(key_of_changes, JSON.stringify(data))
+        }
+    }
+}
+
+function save_programers(objeto){
+
+    let data = get_somthing_from_local_storage(key_of_changes)
+    data['new_programers'].push(objeto)
+    localStorage.setItem(key_of_changes, JSON.stringify(data))
+}
+
 
 // function pushear_programadores_guardados() {
 //     let programadores_array = JSON.parse(localStorage.getItem('programadores'))
@@ -374,7 +432,7 @@ function load_changes_and_programers(){
 
 
 
-
+check_local_storage()
 
 load_programers_from_db()
 
@@ -383,7 +441,7 @@ display_programers_in_dom(programadores_a_contratar)
 add_evet_listener_to_button_reload_programers()
 
 
-// reload_programers()
+
 
 
 
