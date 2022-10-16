@@ -386,9 +386,7 @@ function load_programers(){
     debugger
 }
 
-function get_somthing_from_local_storage(key){
-    return JSON.parse(localStorage.getItem(key))
-}
+
 
 // es muy malo y muy poco performante este sistema de guardado de datos, shsdhsagf
 function save_changes() {
@@ -402,12 +400,7 @@ function save_changes() {
     }
 }
 
-function save_programers(objeto){
 
-    let data = get_somthing_from_local_storage(key_of_changes)
-    data['new_programers'].push(objeto)
-    localStorage.setItem(key_of_changes, JSON.stringify(data))
-}
 
 
 // function pushear_programadores_guardados() {

@@ -29,3 +29,6 @@ class Programador {
 
 
 
+function get_somthing_from_local_storage(key){
+    return JSON.parse(localStorage.getItem(key))
+}

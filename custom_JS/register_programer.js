@@ -38,11 +38,17 @@ function send_info(){
         first_data + second_data, expirience, title, true 
     )
     console.log(programador_registrado)
-    let programadores_guardados = JSON.parse(localStorage.getItem('programadores'))
-    programadores_guardados.push(programador_registrado)
-    localStorage.setItem('programadores',JSON.stringify(programadores_guardados))
+    
+    save_programers(programador_registrado)
 
     notify("Programador Registrado con exito!")
+}
+
+function save_programers(objeto){
+
+    let data = get_somthing_from_local_storage(key_of_changes)
+    data['new_programers'].push(objeto)
+    localStorage.setItem(key_of_changes, JSON.stringify(data))
 }
 
 // Ejecucion:
