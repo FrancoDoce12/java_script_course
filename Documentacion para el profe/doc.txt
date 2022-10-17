@@ -1,0 +1,15 @@
+Lo que se explicara aqui es el funcionamiento general del programa con respecto a cosas raras que tenga
+
+Primero el programa al empezar, lo que hace es sacar los datos de los programadores de la base de datos
+
+despues cuando eso halla ocurrido se cargan los cambios echos, que son los cambios?, son datos sobre los
+cambios que se le hacen a los programadores y los programadores nuevos. todos esos cambios se guardan en
+la localStorage con la key de 'changes', el resto de las keys no las uso, las habia usado en el pasado y
+ya las deje de usar.
+
+Se guardan esos cambios variables locales las cuales se usan para renderisar en el DOM 
+y se renderizan en el dom despues de que se hallan cargado esos cambios
+
+los cambios se guardan cada vez que apretas el boton de contratar o creas un nuevo programador,
+la mayoria de estos guardados suceden en la funcion save_changes() que se podria hacer mejor pero cumple
+con su objetivo
