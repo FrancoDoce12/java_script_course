@@ -395,15 +395,11 @@ function save_changes() {
                 data['new_programers'][new_index].tiempo_libre = programer.tiempo_libre
                 localStorage.setItem(key_of_changes, JSON.stringify(data))
             }
-        }
-
-
-        if (!(programer.tiempo_libre == original_data_base[i].tiempo_libre)) {
+        } else if (!(programer.tiempo_libre == original_data_base[i].tiempo_libre)) {
             let data = get_somthing_from_local_storage(key_of_changes)
             data['programers'][i] = programer.tiempo_libre
             localStorage.setItem(key_of_changes, JSON.stringify(data))
         }
-        
         debugger
 
     }
