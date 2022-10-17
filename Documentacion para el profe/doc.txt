@@ -13,3 +13,7 @@ y se renderizan en el dom despues de que se hallan cargado esos cambios
 los cambios se guardan cada vez que apretas el boton de contratar o creas un nuevo programador,
 la mayoria de estos guardados suceden en la funcion save_changes() que se podria hacer mejor pero cumple
 con su objetivo
+
+
+PROFEE no se olvide que si va a la parte de register programer en la barra de navegacion de arriba, va
+a poder registrar un programador nuevo, el resto de los botones de navegacion te llevan al index.html
