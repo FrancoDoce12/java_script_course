@@ -119,7 +119,6 @@ async function load_programers_from_db() {
     catch (error) {
         console.error(error)
     }
-    debugger
     load_changes_and_programers()
 }
 
@@ -128,7 +127,6 @@ function put_programers_in_dom(data) {
     clear_dom()
     start_page(programadores_a_contratar)
 }
-
 
 
 /*
@@ -358,45 +356,56 @@ function clear_all_local_storage() {
 function clear_changes_local_storage() {
     localStorage.setItem(key_of_changes, JSON.stringify({
         'programers': {},
-        'new_programers':[]
+        'new_programers': []
     }))
 }
 
 function load_changes_and_programers() {
-    debugger
     load_changes()
     load_programers()
     clear_dom()
     start_page(programadores_a_contratar)
 }
 
-function load_changes(){
-    debugger
+function load_changes() {
     let data = get_somthing_from_local_storage(key_of_changes)['programers']
     for (const [key, value] of Object.entries(data)) {
-        debugger
         programadores_a_contratar[key].tiempo_libre = value
     }
 }
 
-function load_programers(){
-    debugger
+function load_programers() {
     let data = get_somthing_from_local_storage(key_of_changes)['new_programers']
     programadores_a_contratar = [...programadores_a_contratar, ...transformar_programador_obj_a_class(data)]
-    debugger
 }
 
 
 
-// es muy malo y muy poco performante este sistema de guardado de datos, shsdhsagf
+// es muy malo 🥴 y muy poco performante este sistema de guardado de datos, shsdhsagf 💩💀
 function save_changes() {
     for (const [i, programer] of programadores_a_contratar.entries()) {
+        debugger
+        if (!original_data_base[i]) {
+            debugger
+            let new_index = i - original_data_base.length
+            let data = get_somthing_from_local_storage(key_of_changes)
+            debugger
+            if (!(programer.tiempo_libre == data['new_programers'][new_index].tiempo_libre)) {
+                debugger
+                data['new_programers'][new_index].tiempo_libre = programer.tiempo_libre
+                localStorage.setItem(key_of_changes, JSON.stringify(data))
+            }
+        }
+
+
         if (!(programer.tiempo_libre == original_data_base[i].tiempo_libre)) {
-            
             let data = get_somthing_from_local_storage(key_of_changes)
             data['programers'][i] = programer.tiempo_libre
             localStorage.setItem(key_of_changes, JSON.stringify(data))
         }
+        
+        debugger
+
     }
 }
 
