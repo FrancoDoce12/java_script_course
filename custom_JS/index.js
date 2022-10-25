@@ -117,7 +117,7 @@ async function load_programers_from_db() {
         }
     }
     catch (error) {
-        console.error(error)
+        console.log(error)
     }
     load_changes_and_programers()
 }
