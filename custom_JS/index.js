@@ -117,7 +117,7 @@ async function load_programers_from_db() {
         }
     }
     catch (error) {
-        console.log(error)
+        error? console.log(error) : console.log("error al cargar datos de el json")
     }
     finally {
     load_changes_and_programers()
