@@ -48,7 +48,7 @@ body {
     height: 360px;
 
 
-    background: radial-gradient(rgba(0, 0, 0, 0.158) 40%, rgba(0, 0, 0, 0.267), rgba(0, 0, 0, 0.548)70%), url(/assets/istockphoto-1322506703-170667a.jpg);
+    background: radial-gradient(rgba(0, 0, 0, 0.158) 40%, rgba(0, 0, 0, 0.267), rgba(0, 0, 0, 0.548)70%), url(../assets/istockphoto-1322506703-170667a.jpg);
 
     /* background-image: url(/assets/istockphoto-1322506703-170667a.jpg); */
     background-position: center;
