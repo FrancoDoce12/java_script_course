@@ -119,7 +119,9 @@ async function load_programers_from_db() {
     catch (error) {
         console.log(error)
     }
+    finally {
     load_changes_and_programers()
+    }
 }
 
 function put_programers_in_dom(data) {
